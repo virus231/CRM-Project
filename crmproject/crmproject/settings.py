@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'crmmain',
-    'rest_framework'
+    'rest_framework',
+    'users'
 ]
 
 MIDDLEWARE = [
@@ -83,6 +84,8 @@ WSGI_APPLICATION = 'crmproject.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
+
+AUTH_USER_MODEL = 'users.CustomUser'
 
 DATABASES = {
     'default': {
