@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'crmmain',
     'rest_framework',
-    'users'
+    'users', 
+    'managerAdmin',
 ]
 
 MIDDLEWARE = [
