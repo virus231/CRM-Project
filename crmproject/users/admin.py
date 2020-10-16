@@ -3,6 +3,7 @@ from django.contrib.auth.admin import UserAdmin
 from .forms import CustomUserCreationForm, CustomUserChangeForm
 from .models import CustomUser
 
+<<<<<<< HEAD
 class CustomUserAdmin(UserAdmin):
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
@@ -21,3 +22,8 @@ class CustomUserAdmin(UserAdmin):
     )
     search_fields = ('email',)
     ordering = ('email',)
+=======
+# Register your models here.
+from .models import CustomUser
+admin.site.register(CustomUser)
+>>>>>>> dd989e37e6605b8cf9d8c285b57c947dab1c5718
