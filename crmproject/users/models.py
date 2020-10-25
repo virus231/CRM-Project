@@ -1,14 +1,17 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
-from django.utils.translation import ugettext_lazy as _
-from .managers import CustomUserManager
 
+# Create your models here.
 client_status = (
-				('1', 'New Client'),
-				('2','Client In Progress'),
-				('3', 'Client Processed'),
-				)
+                ('1', 'New Client'),
+                ('2','Client In Progress'),
+                ('3', 'Client Processed'),
+                )
 
+<<<<<<< HEAD
+class Client(models.Model):
+    mobile = models.CharField(max_length = 13, default = 'Mobile', unique=True)
+    status = models.CharField(max_length=9, choices=client_status, default='1')
+=======
 class CustomUser(AbstractUser):
     username = None
     email = models.EmailField(_('email address'), unique=True)
@@ -20,3 +23,4 @@ class CustomUser(AbstractUser):
     objects = CustomUserManager()
     def __str__(self):
         return self.email
+>>>>>>> 5a10d5e265417f4264e06c140637426d53e0ba80

@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.urls import include
-from managerAdmin.views import UserViewSet, ManagerViewSet
+from manager_admin.views import UserViewSet, ManagerViewSet
 from rest_framework import routers, serializers, viewsets
 
 from django.urls import path, include
@@ -28,12 +28,17 @@ from rest_framework_simplejwt.views import (
 
 router = routers.DefaultRouter()
 router.register (r'users', UserViewSet)
-router.register (r'managerAdmin', ManagerViewSet)
+router.register (r'manager_admin', ManagerViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+<<<<<<< HEAD
     path('api/user/', include('users.urls', namespace='users')),
+=======
+>>>>>>> 020a4c814ae2449d0d76c08409f853a7e2eb467c
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
 ]
+
+urlpatterns += router.urls
