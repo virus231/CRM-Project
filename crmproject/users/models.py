@@ -12,12 +12,9 @@ client_status = (
 class CustomUser(AbstractUser):
     username = None
     email = models.EmailField(_('email address'), unique=True)
-<<<<<<< HEAD
-=======
     mobile = models.CharField(max_length = 13, default = 'Mobile')
     progress = models.CharField(max_length=9, choices=client_status, default='1')
     
->>>>>>> dd989e37e6605b8cf9d8c285b57c947dab1c5718
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
     objects = CustomUserManager()
