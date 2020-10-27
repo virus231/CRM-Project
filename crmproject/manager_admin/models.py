@@ -8,11 +8,11 @@ from users.models import Client
 
 class Manager(AbstractUser):
     username = None
-    email = models.EmailField(_('email address'))
+    email = models.EmailField(_('email address'), unique=True)
     client_id = models.ForeignKey(Client, on_delete = models.CASCADE, null=True)
     is_admin = models.BooleanField()
 
-    USERNAME_FIELD = 'id'
+    USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
     objects = CustomUserManager()
