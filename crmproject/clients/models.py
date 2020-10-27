@@ -1,4 +1,5 @@
 from django.db import models
+from managers.models import Manager
 
 # Create your models here.
 client_status = (
@@ -14,4 +15,7 @@ class Client(models.Model):
     status = models.CharField(max_length=9, choices=client_status, default='1')
 
     def __str__(self):
+    	manager = models.ForeignKey(Manager, on_delete = models.CASCADE, null=True)
+
+    def str(self):
         return self.mobile

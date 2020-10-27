@@ -1,7 +1,7 @@
 from django.urls import path, include
 from rest_framework import routers, serializers, viewsets
 from .models import Manager
-from users.models import Client
+from clients.models import Client
 
 class ManagerSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:

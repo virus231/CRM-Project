@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.urls import include
-from manager_admin.views import UserViewSet, ManagerViewSet
+from managers.views import UserViewSet, ManagerViewSet
 from rest_framework import routers, serializers, viewsets
 
 from django.urls import path, include
@@ -28,7 +28,7 @@ from rest_framework_simplejwt.views import (
 
 router = routers.DefaultRouter()
 router.register (r'users', UserViewSet)
-router.register (r'manager_admin', ManagerViewSet)
+router.register (r'manager', ManagerViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),

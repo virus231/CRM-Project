@@ -49,10 +49,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'crmmain',
     'rest_framework',
-    'users',
-    'manager_admin',
+    'clients',
+    'managers',
 ]
 
 MIDDLEWARE = [
@@ -136,7 +135,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-AUTH_USER_MODEL = 'manager_admin.Manager'
+AUTH_USER_MODEL = 'managers.Manager'
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),

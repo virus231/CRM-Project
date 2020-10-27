@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from .models import Manager
-from users.models import Client
+from clients.models import Client
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import routers, serializers, viewsets, mixins
 from rest_framework.decorators import action
