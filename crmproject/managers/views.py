@@ -45,10 +45,10 @@ class ManagerViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
     	if True:
     	# if self.request.user.is_admin:
-    		if self.request.query_params.get('manager_admin', None):
-    			return Manager.objects.filter(p = 'manager_admin')
+    		if self.request.query_params.get('managers', None):
+    			return Manager.objects.filter(p = 'managers')
     		return Manager.objects.all()
-    	return	Manager.objects.filter (manager_id = self.request.users.id)
+    	return	Manager.objects.filter (manager_id = self.request.clients.id)
 
 #viewsets має функції на отримання всіх по індексу - def retrieve, ліста  def list, update, create, delete ...
 #class CustomViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin)

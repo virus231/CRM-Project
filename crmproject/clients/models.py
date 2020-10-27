@@ -13,9 +13,10 @@ class Client(models.Model):
     last_name = models.CharField(max_length = 36, default = 'Last Name')
     mobile = models.CharField(max_length = 13, default = 'Mobile', unique=True)
     status = models.CharField(max_length=9, choices=client_status, default='1')
+    manager = models.ForeignKey(Manager, on_delete = models.CASCADE, null=True)
 
-    def __str__(self):
-    	manager = models.ForeignKey(Manager, on_delete = models.CASCADE, null=True)
+    # def __str__(self):
+    # 	manager = models.ForeignKey(Manager, on_delete = models.CASCADE, null=True)
 
     def str(self):
         return self.mobile
