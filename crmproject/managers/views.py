@@ -8,6 +8,9 @@ from rest_framework.decorators import action
 from .serializer import ManagerSerializer, ClientSerializer
 from rest_framework.permissions import IsAuthenticated
 from django.core.paginator import Paginator
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 
 
 def get_manager_by_username(request, username):
@@ -43,12 +46,19 @@ class ManagerViewSet(viewsets.ModelViewSet):
     serializer_class = ManagerSerializer
 
     def get_queryset(self):
-    	if True:
-    	# if self.request.user.is_admin:
+    	# if True:
+    	if self.request.clients.is_admin:
     		if self.request.query_params.get('managers', None):
     			return Manager.objects.filter(p = 'managers')
     		return Manager.objects.all()
     	return	Manager.objects.filter (manager_id = self.request.clients.id)
+
+
+class LoginLogout(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        return Response()
 
 #viewsets має функції на отримання всіх по індексу - def retrieve, ліста  def list, update, create, delete ...
 #class CustomViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin)
