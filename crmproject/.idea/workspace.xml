@@ -6,19 +6,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fbc1aadc-4501-48c8-844a-17a726b2ab31" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/crmproject/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/crmproject/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/managerAdmin/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/managerAdmin/migrations/0002_auto_20201012_1340.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/managerAdmin/migrations/0003_auto_20201012_1341.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/managerAdmin/migrations/0004_auto_20201012_1342.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/managerAdmin/migrations/0005_remove_manager_is_able.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/managerAdmin/migrations/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/migrations/0001_initial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/migrations/0003_remove_customuser_mobile.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/clients/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/clients/migrations/0001_initial.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crmproject/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/crmproject/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/managers/managers.py" beforeDir="false" afterPath="$PROJECT_DIR$/managers/managers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/managers/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/managers/migrations/0001_initial.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/managers/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/managers/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,6 +41,7 @@
       <option name="presentableId" value="Default" />
       <updated>1603048316599</updated>
       <workItem from="1603048317645" duration="4301000" />
+      <workItem from="1604260329867" duration="261000" />
     </task>
     <servers />
   </component>
@@ -65,11 +58,12 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="695" y="329" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1603051873264">
+    <state x="695" y="329" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1604260359013">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state x="695" y="329" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1080@0.0.1920.1080" timestamp="1603051873264" />
+    <state x="695" y="329" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1080@0.0.1920.1080" timestamp="1604260359013" />
   </component>
 </project>

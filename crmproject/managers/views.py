@@ -6,7 +6,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import routers, serializers, viewsets, mixins
 from rest_framework.decorators import action
 from .serializer import ManagerSerializer, ClientSerializer
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import IsAuthenticated
 from django.core.paginator import Paginator
 
 
@@ -20,7 +20,7 @@ def get_manager_by_username(request, username):
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = Client.objects.all()
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     serializer_class = ClientSerializer
 
     def listing(request):
@@ -39,7 +39,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
 class ManagerViewSet(viewsets.ModelViewSet):
     queryset = Manager.objects.all()
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     serializer_class = ManagerSerializer
 
     def get_queryset(self):
