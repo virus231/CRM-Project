@@ -47,11 +47,22 @@ class ManagerViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
     	# if True:
-    	if self.request.clients.is_admin:
-    		if self.request.query_params.get('managers', None):
-    			return Manager.objects.filter(p = 'managers')
-    		return Manager.objects.all()
-    	return	Manager.objects.filter (manager_id = self.request.clients.id)
+    	# if self.request.clients.is_admin:
+    		# if self.request.query_params.get('managers', None):
+    			# return Manager.objects.filter(p = 'managers')
+    	return Manager.objects.all()
+    	# return	Manager.objects.filter (manager_id = self.request.clients.id)
+
+    def create(self, request, *args, **kwargs):
+        user = Manager(email=request.data['email'])
+        user.set_password(request.data['password'])
+        user.save()
+        # serializer = self.get_serializer(data=user)
+        # serializer.is_valid(raise_exception)
+        # headers = self.get_success_header(serializer.data)
+        return Response(user.email, status=status.HTTP_201_CREATED)
+
+
 
 
 class LoginLogout(APIView):
