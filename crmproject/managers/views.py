@@ -6,7 +6,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import routers, serializers, viewsets, mixins
 from rest_framework.decorators import action
 from .serializer import ManagerSerializer, ClientSerializer
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import IsAuthenticated
 from django.core.paginator import Paginator
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -46,12 +46,16 @@ class ManagerViewSet(viewsets.ModelViewSet):
     serializer_class = ManagerSerializer
 
     def get_queryset(self):
-    	# if True:
-    	# if self.request.clients.is_admin:
-    	# 	if self.request.query_params.get('managers', None):
-    	# 		return Manager.objects.filter(p = 'managers')
-    	# 	return Manager.objects.all()
-    	# return	Manager.objects.filter (manager_id = self.request.)
+    	return Manager.objects.all()
+
+    def create(self, request, *args, **kwargs):
+        user = Manager(email=request.data['email'])
+        user.set_password(request.data['password'])
+        user.save()
+        # serializer = self.get_serializer(data=user)
+        # serializer.is_valid(raise_exception)
+        # headers = self.get_success_header(serializer.data)
+        return Response(user.email, status=status.HTTP_201_CREATED)
 
         if self.request.user.is_admin:
             return Manager.objects.all()
