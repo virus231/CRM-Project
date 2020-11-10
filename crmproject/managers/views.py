@@ -47,12 +47,17 @@ class ManagerViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
     	# if True:
-    	if self.request.clients.is_admin:
-    		if self.request.query_params.get('managers', None):
-    			return Manager.objects.filter(p = 'managers')
-    		return Manager.objects.all()
-    	return	Manager.objects.filter (manager_id = self.request.clients.id)
+    	# if self.request.clients.is_admin:
+    	# 	if self.request.query_params.get('managers', None):
+    	# 		return Manager.objects.filter(p = 'managers')
+    	# 	return Manager.objects.all()
+    	# return	Manager.objects.filter (manager_id = self.request.)
 
+        if self.request.user.is_admin:
+            return Manager.objects.all()
+        return Manager.objects.filter(id = self.request.user.id)  
+
+    
 
 class LoginLogout(APIView):
     permission_classes = (IsAuthenticated,)
