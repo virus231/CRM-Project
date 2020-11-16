@@ -14,11 +14,11 @@ from rest_framework.permissions import IsAuthenticated
 
 
 def get_manager_by_username(request, username):
-	try:
-		obj = Manager.objects.get(id=username)
-		return HttpResponse (obj.title)
-	except ObjectDoesNotExist:
-		return 	HttpResponse ("ObjectDoesNotExist")
+    try:
+        obj = Manager.objects.get(id=username)
+        return HttpResponse (obj.title)
+    except ObjectDoesNotExist:
+        return  HttpResponse ("ObjectDoesNotExist")
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -27,8 +27,8 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = ClientSerializer
 
     def listing(request):
-    	user_list = Client.objects.all()
-    	paginator = Paginator(user_list, 2)
+        user_list = Client.objects.all()
+        paginator = Paginator(user_list, 2)
 
     def get_queryset(self):
         page = self.request.query_params.get('page', None)
@@ -38,7 +38,7 @@ class UserViewSet(viewsets.ModelViewSet):
         return self.queryset
     # @action(detail = False)
     # def last(self, request):
-    # 	return self.queryset.objects.last()
+    #   return self.queryset.objects.last()
 
 class ManagerViewSet(viewsets.ModelViewSet):
     queryset = Manager.objects.all()
@@ -46,22 +46,33 @@ class ManagerViewSet(viewsets.ModelViewSet):
     serializer_class = ManagerSerializer
 
     def get_queryset(self):
-    	return Manager.objects.all()
-
-    def create(self, request, *args, **kwargs):
-        user = Manager(email=request.data['email'])
-        user.set_password(request.data['password'])
-        user.save()
-        # serializer = self.get_serializer(data=user)
-        # serializer.is_valid(raise_exception)
-        # headers = self.get_success_header(serializer.data)
-        return Response(user.email, status=status.HTTP_201_CREATED)
-
         if self.request.user.is_admin:
             return Manager.objects.all()
-        return Manager.objects.filter(id = self.request.user.id)  
+        return Manager.objects.filter(id = self.request.user.id)
 
-    
+    # def create(self, request, *args, **kwargs):      
+    #     user = Manager(email=request.data['email'])
+    #     user.set_password(request.data['password'])
+    #     user.save()
+    #     return Response(user.email, status=status.HTTP_201_CREATED)
+
+    # # def update(self, request, *args, **kwargs):
+    # #     return self.partial_update(request, *args, **kwargs)
+ 
+    # def update(self, request, *args, **kwargs):
+    #     partial = kwargs.pop('partial', False)
+    #     instance = self.get_object()
+    #     user = Manager(instance, email=request.data['email'], partial=partial)
+    #     user.set_password(request.data['password'])
+    #     user.save()
+    #     return Response(user.email)
+
+    # def destroy(self, request, *args, **kwargs):
+    #     user = Manager(email=request.data['email'])
+    #     user.set_password(request.data['password'])
+    #     user.delete()
+    #     return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 class LoginLogout(APIView):
     permission_classes = (IsAuthenticated,)
@@ -69,14 +80,9 @@ class LoginLogout(APIView):
     def get(self, request):
         return Response()
 
-#viewsets має функції на отримання всіх по індексу - def retrieve, ліста  def list, update, create, delete ...
-#class CustomViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin)
-#теж передається квері і серіалайзер
-# viewsets.ReadOnlyModelViewSet - тільки длля читатння
-
 
 # def get_users_list(request):
-# 	if request.method == "GET":
-# 		queryset = Client.objects.all()
-# 		serializer =ClientSerializer(queryset, many = True)
-# 		return JsonResponse (serializer.data)
+#   if request.method == "GET":
+#       queryset = Client.objects.all()
+#       serializer =ClientSerializer(queryset, many = True)
+#       return JsonResponse (serializer.data)

@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls import url
 from django.urls import include
 from managers.views import UserViewSet, ManagerViewSet, LoginLogout
 from rest_framework import routers, serializers, viewsets
@@ -39,6 +40,7 @@ urlpatterns = [
     path('api/token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
     path('hello/', LoginLogout.as_view(), name='hello'),
+    # url(r"users/(?P<pk>[0-9]+)/$", ManagerViewSet.as_view({"get": "retrieve", "post": "create", "put": "update", "delete": "destroy"}), name="user_methods"),
 
 ]
 
