@@ -13,16 +13,16 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from pathlib import Path
 import os
 from datetime import timedelta
-import environ
+# import environ
 
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-env = environ.Env()
-# reading .env file
-environ.Env.read_env()
+# env = environ.Env()
+# # reading .env file
+# environ.Env.read_env()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -117,7 +117,7 @@ WSGI_APPLICATION = 'crmproject.wsgi.application'
   #           'driver' : 'SQL Server Native Client 11.0',
   #           'MARS_Connection': 'True'
 		# }
-	# }
+	}
 # }
 
 # Password validation
