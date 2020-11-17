@@ -63,8 +63,6 @@ class ManagerViewSet(viewsets.ModelViewSet):
         return Response(user.email, status=status.HTTP_201_CREATED)
 
 
-
-
 class LoginLogout(APIView):
     permission_classes = (IsAuthenticated,)
 
