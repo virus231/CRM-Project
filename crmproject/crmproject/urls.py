@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url
 from django.urls import include
-from managers.views import UserViewSet, ManagerViewSet, LoginLogout
+from managers.views import ClientViewSet, ManagerViewSet, LoginLogout, ManagerPermissions
 from rest_framework import routers, serializers, viewsets
 from rest_framework_simplejwt import views as jwt_views
 
@@ -29,7 +29,7 @@ from rest_framework_simplejwt.views import (
 ) 
 
 router = routers.DefaultRouter()
-router.register (r'clients', UserViewSet)
+router.register (r'clients', ClientViewSet)
 router.register (r'managers', ManagerViewSet)
 
 urlpatterns = [

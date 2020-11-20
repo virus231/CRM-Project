@@ -6,7 +6,7 @@ from clients.models import Client
 class ManagerSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Manager
-        fields = ['url', 'id', 'email', 'password', 'is_admin']
+        fields = ['url', 'id', 'email', 'first_name', 'last_name', 'password', 'is_admin']
 class ClientSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Client

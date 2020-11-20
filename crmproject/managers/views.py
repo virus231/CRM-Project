@@ -6,11 +6,12 @@ from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import routers, serializers, viewsets, mixins
 from rest_framework.decorators import action
 from .serializer import ManagerSerializer, ClientSerializer
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.core.paginator import Paginator
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
+from rest_framework import status, permissions
 
 
 def get_manager_by_username(request, username):
@@ -21,7 +22,7 @@ def get_manager_by_username(request, username):
         return  HttpResponse ("ObjectDoesNotExist")
 
 
-class UserViewSet(viewsets.ModelViewSet):
+class ClientViewSet(viewsets.ModelViewSet):
     queryset = Client.objects.all()
     permission_classes = [IsAuthenticated]
     serializer_class = ClientSerializer
@@ -39,39 +40,32 @@ class UserViewSet(viewsets.ModelViewSet):
     # @action(detail = False)
     # def last(self, request):
     #   return self.queryset.objects.last()
+class ManagerPermissions(permissions.BasePermission):
+    def has_object_permission(self, request, view, obj):
+        return obj == request.user
 
 class ManagerViewSet(viewsets.ModelViewSet):
     queryset = Manager.objects.all()
-    permission_classes = [IsAuthenticated]
+    permission_classes = [ManagerPermissions]
     serializer_class = ManagerSerializer
 
     def get_queryset(self):
-        if self.request.user.is_admin:
+        if self.request.user.is_authenticated:
             return Manager.objects.all()
         return Manager.objects.filter(id = self.request.user.id)
 
-    # def create(self, request, *args, **kwargs):      
-    #     user = Manager(email=request.data['email'])
-    #     user.set_password(request.data['password'])
-    #     user.save()
-    #     return Response(user.email, status=status.HTTP_201_CREATED)
-
-    # # def update(self, request, *args, **kwargs):
-    # #     return self.partial_update(request, *args, **kwargs)
- 
     def update(self, request, *args, **kwargs):
         partial = kwargs.pop('partial', False)
         instance = self.get_object()
-        user = Manager(instance, email=request.data['email'])
+        user = Manager(email=request.data['email'], id = instance.id)
         user.set_password(request.data['password'])
         user.save()
         return Response(user.email)
 
-    # def destroy(self, request, *args, **kwargs):
-    #     user = Manager(email=request.data['email'])
-    #     user.set_password(request.data['password'])
-    #     user.delete()
-    #     return Response(status=status.HTTP_204_NO_CONTENT)
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        instance.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class LoginLogout(APIView):
