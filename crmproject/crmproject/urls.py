@@ -18,7 +18,10 @@ from django.urls import path
 from django.conf.urls import url
 from django.urls import include
 from managers.views import ClientViewSet, ManagerViewSet, LoginLogout, ManagerPermissions
+#from managers.schema import Query
 from rest_framework import routers, serializers, viewsets
+from django.views.decorators.csrf import csrf_exempt
+#from graphene_django.views import GraphQLView
 from rest_framework_simplejwt import views as jwt_views
 
 from django.urls import path, include
@@ -33,6 +36,7 @@ router.register (r'clients', ClientViewSet)
 router.register (r'managers', ManagerViewSet)
 
 urlpatterns = [
+    #url(r"graphql", GraphQLView.as_view(graphiql=True)),
     path('admin/', admin.site.urls),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),

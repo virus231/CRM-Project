@@ -14,6 +14,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import status, permissions
 
 
+
 def get_manager_by_username(request, username):
     try:
         obj = Manager.objects.get(id=username)
@@ -21,10 +22,13 @@ def get_manager_by_username(request, username):
     except ObjectDoesNotExist:
         return  HttpResponse ("ObjectDoesNotExist")
 
+class IsManager(permissions.BasePermission):
+    def has_object_permission(self, request, view, obj):
+        return obj.manager == request.user
 
 class ClientViewSet(viewsets.ModelViewSet):
     queryset = Client.objects.all()
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsManager]
     serializer_class = ClientSerializer
 
     def listing(request):
@@ -37,9 +41,30 @@ class ClientViewSet(viewsets.ModelViewSet):
         if page:
             return self.queryset[int(page)*offset:int(page)*offset + offset]
         return self.queryset
-    # @action(detail = False)
-    # def last(self, request):
-    #   return self.queryset.objects.last()
+
+    def create(self, request, *args, **kwargs):
+        if Manager():
+            client = self.get_object(data=request.data['mobile'])
+            client.is_valid(raise_exception=True)
+            client.save()
+            headers = self.get_success_headers(client.mobile)
+            return Response(client.data, status=status.HTTP_201_CREATED, headers=headers)
+
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        client = Client(email=request.data['mobile'], id = instance.id)
+        client.save()
+        return Response(client.mobile)
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        instance.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+
+
 class ManagerPermissions(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         return obj == request.user
