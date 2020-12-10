@@ -33,6 +33,9 @@ class ClientViewSet(viewsets.ModelViewSet):
     serializer_class = ClientSerializer
 
     def get_queryset(self):
+        if Manager.is_admin == True:
+            return [permissions.AllowAny()]
+            
         # return self.queryset
         queryset = self.queryset.filter(manager_id = self.request.user.id)
         page = self.request.query_params.get('page', 0)
@@ -42,6 +45,8 @@ class ClientViewSet(viewsets.ModelViewSet):
         return queryset
 
     def create(self, request, *args, **kwargs):
+        if Manager.is_admin == True:
+            return [permissions.AllowAny()]
         # data = copy.deepcopy(request.data) 
         # data["manager_id"] = request.user.id
         client = self.get_serializer(data=request.data)
@@ -52,6 +57,9 @@ class ClientViewSet(viewsets.ModelViewSet):
         return Response(request.data, status=status.HTTP_201_CREATED, headers=headers)
 
     def update(self, request, *args, **kwargs):
+        if Manager.is_admin == True:
+            return [permissions.AllowAny()]
+
         partial = kwargs.pop('partial', False)
         instance = self.get_object()
         serializer = self.get_serializer(instance, data = request.data, partial=partial)
@@ -62,6 +70,8 @@ class ClientViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
     def destroy(self, request, *args, **kwargs):
+        if Manager.is_admin == True:
+            return [permissions.AllowAny()]
         instance = self.get_object()
         self.perform_destroy(instance)
         return Response(status=status.HTTP_204_NO_CONTENT)
