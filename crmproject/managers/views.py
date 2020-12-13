@@ -33,8 +33,11 @@ class ClientViewSet(viewsets.ModelViewSet):
     serializer_class = ClientSerializer
 
     def get_queryset(self):
-        if Manager.is_admin == True:
-            return [permissions.AllowAny()]
+        if not self.request.user.is_authenticated:
+            return[]
+        if self.request.user.is_superuser:
+            return self.queryset
+        return self.queryset.filter(manager_id=self.request.user.id)
             
         # return self.queryset
         queryset = self.queryset.filter(manager_id = self.request.user.id)
@@ -90,8 +93,11 @@ class ManagerViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         if self.request.user.is_authenticated:
-            return Manager.objects.all()
-        return Manager.objects.filter(id = self.request.user.id)
+            if self.request.user.is_superuser:
+                return Manager.objects.exclude(id=self.request.user.id)
+            else:
+                return Manager.objects.filter(id=self.request.user.id)
+        return []
 
     def update(self, request, *args, **kwargs):
         partial = kwargs.pop('partial', False)
