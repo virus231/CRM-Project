@@ -34,7 +34,8 @@ class ClientViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         if Manager.is_admin == True:
-            return [permissions.AllowAny()]
+        #     return [permissions.AllowAny()]
+            return Client.objects.all()
             
         # return self.queryset
         queryset = self.queryset.filter(manager_id = self.request.user.id)
