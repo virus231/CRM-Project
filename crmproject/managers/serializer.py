@@ -10,4 +10,4 @@ class ManagerSerializer(serializers.HyperlinkedModelSerializer):
 class ClientSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Client
-        fields = ['url', 'id', 'first_name', 'last_name', 'mobile', 'status']
+        fields = ['url', 'id', 'first_name', 'last_name', 'mobile', 'status', 'manager']
