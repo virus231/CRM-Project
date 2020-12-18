@@ -13,7 +13,13 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status, permissions
 import copy
+from django.conf.urls import url
+from rest_framework_swagger.views import get_swagger_view
 
+schema_view = get_swagger_view(title='CRM API')
+urlpatterns = [
+    url(r'^$', schema_view)
+]
 
 def get_manager_by_username(request, username):
     try:

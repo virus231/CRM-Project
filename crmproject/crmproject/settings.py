@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'clients',
     'managers',
+    'rest_framework_swagger',
     # "django.contrib.staticfiles", # Required for GraphiQL
     # "graphene_django",
 ]
