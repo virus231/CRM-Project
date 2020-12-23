@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
-from django.contrib.auth.hashes import__make_password_,check_password
 from .models import Manager
 from clients.models import Client
 from django.core.exceptions import ObjectDoesNotExist
@@ -14,7 +13,13 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status, permissions
 import copy
+from django.conf.urls import url
+from rest_framework_swagger.views import get_swagger_view
 
+schema_view = get_swagger_view(title='CRM API')
+urlpatterns = [
+    url(r'^$', schema_view)
+]
 
 def get_manager_by_username(request, username):
     try:
@@ -26,6 +31,8 @@ def get_manager_by_username(request, username):
 class IsManager(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         #raise Exception (obj.manager.id, request.user.id)
+        if request.user.is_superuser:
+            return True
         return obj.manager_id == request.user.id
 
 class ClientViewSet(viewsets.ModelViewSet):
@@ -49,8 +56,13 @@ class ClientViewSet(viewsets.ModelViewSet):
         return queryset
 
     def create(self, request, *args, **kwargs):
-        if Manager.is_admin == True:
-            return [permissions.AllowAny()]
+        if self.request.user.is_superuser:
+            client = self.get_serializer(data=request.data)
+            client.is_valid(raise_exception=True)
+            self.perform_create(client)
+            headers = self.get_success_headers(client.data)
+            return Response(request.data, status=status.HTTP_201_CREATED, headers=headers)
+
         # data = copy.deepcopy(request.data) 
         # data["manager_id"] = request.user.id
         client = self.get_serializer(data=request.data)
@@ -61,9 +73,6 @@ class ClientViewSet(viewsets.ModelViewSet):
         return Response(request.data, status=status.HTTP_201_CREATED, headers=headers)
 
     def update(self, request, *args, **kwargs):
-        if Manager.is_admin == True:
-            return [permissions.AllowAny()]
-
         partial = kwargs.pop('partial', False)
         instance = self.get_object()
         serializer = self.get_serializer(instance, data = request.data, partial=partial)
@@ -74,8 +83,6 @@ class ClientViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
     def destroy(self, request, *args, **kwargs):
-        if Manager.is_admin == True:
-            return [permissions.AllowAny()]
         instance = self.get_object()
         self.perform_destroy(instance)
         return Response(status=status.HTTP_204_NO_CONTENT)
@@ -85,6 +92,8 @@ class ClientViewSet(viewsets.ModelViewSet):
 
 class ManagerPermissions(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
+        if request.user.is_superuser:
+            return True
         return obj == request.user
 
 class ManagerViewSet(viewsets.ModelViewSet):
@@ -104,21 +113,12 @@ class ManagerViewSet(viewsets.ModelViewSet):
         partial = kwargs.pop('partial', False)
         instance = self.get_object()
         user = Manager(email=request.data['email'], id = instance.id)
-        make_password('password')
         user.set_password(request.data['password'])
         user.save()
         return Response(user.email)
+
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
         instance.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-
-
-
-
-# def get_users_list(request):
-#   if request.method == "GET":
-#       queryset = Client.objects.all()
-#       serializer =ClientSerializer(queryset, many = True)
-#       return JsonResponse (serializer.data)
